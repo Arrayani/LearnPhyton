@@ -115,3 +115,4 @@ button_Delete = tkinter.Button(frame, text="Delete data", command= delete_data)
 button_Delete.grid(row=8, column=0, sticky="news", padx=20, pady=10)
  
 window.mainloop()
+koneksi.close()  # Menutup koneksi database setelah selesai digunakan
