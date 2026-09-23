@@ -26,41 +26,39 @@ koneksi.commit()  # Menyimpan perubahan (wajib dilakukan setelah membuat tabel)
 
 def delete_data():
         print("Menghapus Data: ")
-    ##Menghapus data dari tabel produk berdasarkan merk
-id_to_delete = "Onemed"
-if id_to_delete:
-        cursor.execute("DELETE FROM produk WHERE merk = ?", (id_to_delete,))
-koneksi.commit()
-print(f"Data dengan ID {id_to_delete} berhasil dihapus!")
-# else:
-# print("ID tidak boleh kosong!")
-# 5. Membaca data dari tabel (SELECT)
-cursor.execute("SELECT * FROM produk")
-semua_data = cursor.fetchall()
-for baris in semua_data:
-    print(baris)    
+        ##Menghapus data dari tabel produk berdasarkan merk
+        id_to_delete = "Onemed"
+        if id_to_delete:
+            cursor.execute("DELETE FROM produk WHERE merk = ?", (id_to_delete,))
+        koneksi.commit()
+        print(f"Data dengan ID {id_to_delete} berhasil dihapus!")
+        # else:
+        # print("ID tidak boleh kosong!")
+        # 5. Membaca data dari tabel (SELECT)
+        cursor.execute("SELECT * FROM produk")
+        semua_data = cursor.fetchall()
+        for baris in semua_data:
+            print(baris)    
 
+def enter_data():        
+    with  koneksi:
+        # cursor = koneksi.cursor()                                       
+        print("Memasukan Data: ")
+        data_baru = ("Onemed","Thermometer Digital" ,"Biru","Pcs", 100000, 150000, 10)
+        cursor.execute('''
+            INSERT INTO produk (merk, namaBrg, varian, unit, hrgmodal, hrgjual, stok)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', data_baru)
 
+    # Menyimpan perubahan (wajib dilakukan setelah melakukan INSERT/UPDATE/DELETE)
+        koneksi.commit()
+        print("Data berhasil dimasukkan!")         
 
-
-
-def enter_data():              
-            print("Memasukan Data: ")
-data_baru = ("Onemed","Thermometer Digital" ,"Biru","Pcs", 100000, 150000, 10)
-cursor.execute('''
-    INSERT INTO produk (merk, namaBrg, varian, unit, hrgmodal, hrgjual, stok)
-    VALUES (?, ?, ?, ?, ?, ?, ?)
-''', data_baru)
-
-# Menyimpan perubahan (wajib dilakukan setelah melakukan INSERT/UPDATE/DELETE)
-koneksi.commit()
-print("Data berhasil dimasukkan!")         
-
-# 5. Membaca data dari tabel (SELECT)
-cursor.execute("SELECT * FROM produk")
-semua_data = cursor.fetchall()
-for baris in semua_data:
-    print(baris)    
+        # 5. Membaca data dari tabel (SELECT)
+        cursor.execute("SELECT * FROM produk")
+        semua_data = cursor.fetchall()
+        for baris in semua_data:
+            print(baris)    
 # # 6. Menutup koneksi database setelah selesai digunakan
 # koneksi.close()
 
@@ -109,11 +107,11 @@ stok_entry = tkinter.Entry(user_info_frame)
 stok_entry.grid(row=6, column=1)
 
 # # Button
-button = tkinter.Button(frame, text="Enter data", command= enter_data)
-button.grid(row=7, column=0, sticky="news", padx=20, pady=10)
+button_Enter = tkinter.Button(frame, text="Enter data", command= enter_data)
+button_Enter.grid(row=7, column=0, sticky="news", padx=20, pady=10)
 
 # # Button
-button = tkinter.Button(frame, text="Delete data", command= delete_data)
-button.grid(row=8, column=0, sticky="news", padx=20, pady=10)
+button_Delete = tkinter.Button(frame, text="Delete data", command= delete_data)
+button_Delete.grid(row=8, column=0, sticky="news", padx=20, pady=10)
  
 window.mainloop()
