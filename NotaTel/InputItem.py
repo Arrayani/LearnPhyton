@@ -4,10 +4,20 @@ from tkinter import ttk
 from tkinter import messagebox
 from sqlite3 import Error
 
+
+
+# Drop the table if it already exists (to start fresh)
+#cursor_obj.execute("DROP TABLE IF EXISTS produk")
+
 # 1. Membuat atau menghubungkan ke database bernama 'toko.db'
 koneksi = sqlite3.connect('NotaTel.db')
 # 2. Membuat objek cursor untuk mengeksekusi perintah SQL
 cursor = koneksi.cursor()
+
+# Drop the table if it already exists (to start fresh)
+cursor.execute("DROP TABLE IF EXISTS produk")
+
+
 # 3. Membuat tabel baru bernama 'produk' jika belum ada
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS produk (
@@ -29,7 +39,8 @@ def delete_data():
         ##Menghapus data dari tabel produk berdasarkan merk
         id_to_delete = "Onemed"
         if id_to_delete:
-            cursor.execute("DELETE FROM produk WHERE merk = ?", (id_to_delete,))
+            # cursor.execute("DELETE FROM produk WHERE merk = ?", (id_to_delete,))
+            cursor.execute("DELETE FROM produk") #ini mendelete semua isi table, bukan destroy
         koneksi.commit()
         print(f"Data dengan ID {id_to_delete} berhasil dihapus!")
         # else:
@@ -71,23 +82,23 @@ frame = tkinter.Frame(window)
 frame.pack()
 
 # Saving User Info
-user_info_frame =tkinter.LabelFrame(frame, text="Informasi Barang")
-user_info_frame.grid(row= 0, column=0, padx=20, pady=10)
+user_info_frame =tkinter.LabelFrame(frame, text="Informasi Barang",font=('Arial 16 bold'))
+user_info_frame.grid(row= 0, column=0, padx=20, pady=20,ipadx=5,ipady=10)
 
-merk_label = tkinter.Label(user_info_frame, text="Merk",anchor="w",compound="left")
-merk_label.grid(row=0, column=0)
-namaBrg_label = tkinter.Label(user_info_frame, text="Nama Barang",anchor="w")
-namaBrg_label.grid(row=1, column=0)
-varian_label = tkinter.Label(user_info_frame, text="Varian",justify="left")
-varian_label.grid(row=2, column=0)
-unit_label = tkinter.Label(user_info_frame, text="Unit",justify="left")   
-unit_label.grid(row=3, column=0)
-hrgmodal_label = tkinter.Label(user_info_frame, text="Harga Modal",justify="left" )
-hrgmodal_label.grid(row=4, column=0)
-hrgjual_label = tkinter.Label(user_info_frame, text="Harga Jual",justify="left")                           
-hrgjual_label.grid(row=5, column=0)     
-stok_label = tkinter.Label(user_info_frame, text="Stok",justify="left")  
-stok_label.grid(row=6, column=0)    
+merk_label = tkinter.Label(user_info_frame, text="Merk",font=('Arial 12 '))
+merk_label.grid(row=0, column=0,sticky=tkinter.W)
+namaBrg_label = tkinter.Label(user_info_frame, text="Nama Barang",font=('Arial 12 '))
+namaBrg_label.grid(row=1, column=0,sticky=tkinter.W)
+varian_label = tkinter.Label(user_info_frame, text="Varian",font=('Arial 12 '))
+varian_label.grid(row=2, column=0,sticky=tkinter.W)
+unit_label = tkinter.Label(user_info_frame, text="Unit",font=('Arial 12 '))   
+unit_label.grid(row=3, column=0,sticky=tkinter.W)
+hrgmodal_label = tkinter.Label(user_info_frame, text="Harga Modal",font=('Arial 12 '))
+hrgmodal_label.grid(row=4, column=0,sticky=tkinter.W)
+hrgjual_label = tkinter.Label(user_info_frame, text="Harga Jual",font=('Arial 12 '))
+hrgjual_label.grid(row=5, column=0,sticky=tkinter.W)     
+stok_label = tkinter.Label(user_info_frame, text="Stok",font=('Arial 12 '))
+stok_label.grid(row=6, column=0,sticky=tkinter.W)    
 
 
 
@@ -107,11 +118,11 @@ stok_entry = tkinter.Entry(user_info_frame)
 stok_entry.grid(row=6, column=1)
 
 # # Button
-button_Enter = tkinter.Button(frame, text="Enter data", command= enter_data)
+button_Enter = tkinter.Button(frame, text="Enter data", command= enter_data,font=('Arial 12 '))
 button_Enter.grid(row=7, column=0, sticky="news", padx=20, pady=10)
 
 # # Button
-button_Delete = tkinter.Button(frame, text="Delete data", command= delete_data)
+button_Delete = tkinter.Button(frame, text="Delete data", command= delete_data,font=('Arial 12 '))
 button_Delete.grid(row=8, column=0, sticky="news", padx=20, pady=10)
  
 window.mainloop()
